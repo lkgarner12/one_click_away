@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang = en>
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content= "width = device-width, initial-scale = 1.0">
+        <title>One Click Away</title>
+.       <!-- Favicons -->
+        <link rel="icon" type="image/x-icon" href="./images/oneClickLogoOutline2_16x16.ico">
+        <link rel="icon" type="image/x-icon" href="./images/oneClickLogoOutline2_32x32.ico">
+        <link rel="icon" type="image/x-icon" href="./images/oneClickLogoOutline2_64x64.ico">
+    </head>
+    <body>
+        <div id = "page">
+            <h1 id = "title">one click away</h1>
+            <!-- <h1 id="title" img src="./images/oneClickLogoOutline2.png"></h1>  -->
+            <!-- Container for soundBtn -->
+            <div id = "sounds"
+             style = "margin: 0;
+                      position: absolute;
+                      right: 1.5vw;"></div>
+            <!-- Menu Buttons -->
+            <div id = "menu">
+                <div id = "instructionsB">
+                    <button id = "instructionsBtn" onclick = "cleartoInstructions()">Instructions</button>
+                </div>
+                <div id = "play">
+                    <button id = "playBtn" onclick = "cleartoPlay()">Play</button>
+                </div>
+            </div>
+            <!-- Page Layout for Instructions -->
+            <div id = "instructions">
+                <h2 id = "instructTitle"></h2>
+                <p id = "headline"></p>
+                <p id = "info"></p>
+                <div id = "toMainBtn"></button>
+            </div>
+        </div>
+        <canvas id = "canvas"></canvas>
+        <script>
+            // Clear document to load in new page
+            function cleartoInstructions() {
+                clearElements();
+                instructions();
+            }
+
+            function cleartoPlay() {
+                // Clear Elements
+                clearElements();
+                document.getElementById("instructionsBtn").remove();
+                document.getElementById("playBtn").remove();
+                // Set-up game elements
+                const game = document.createElement('canvas.webgl');
+                game.setAttribute('id', 'game');
+
+
+                console.log("cleared");
+            }
+
+            function clearElements() {
+                document.getElementById("title").innerHTML = "";
+                document.getElementById("instructionsBtn").innerHTML = "";
+                document.getElementById("instructionsBtn").disabled = true;
+                document.getElementById("playBtn").innerHTML = "";
+                document.getElementById("playBtn").disabled = true;
+            }
+
+            // Add elements to Instructions page
+            function instructions() {
+                let title = "Instructions";
+                let headline = "'One Click Away' is an interactive activity that provides a distinct oasis away from the turmoils of everyday life.";
+                let info = "Click the screen to render a serene scene. An escape from your worries lies one click away."
+                document.getElementById("instructTitle").innerHTML = title;
+                document.getElementById("headline").innerHTML = headline;
+                document.getElementById("info").innerHTML = info;
+                
+
+                let rtnBtn = document.createElement("button");
+                rtnBtn.innerText = "Return to Main"
+                rtnBtn.addEventListener('click', () => {
+                    // Return to the Main Page and Restore Elements
+                    document.getElementById("instructTitle").innerHTML = "";
+                    document.getElementById("headline").innerHTML = "";
+                    document.getElementById("info").innerHTML = "";
+                    document.getElementById("toMainBtn").innerHTML = "";
+
+                    document.getElementById("title").innerHTML = "one click away";
+                    document.getElementById("instructionsBtn").innerHTML = "Instructions";
+                    document.getElementById("instructionsBtn").disabled = false;
+                    document.getElementById("playBtn").innerHTML = "Play";
+                    document.getElementById("playBtn").disabled = false;
+                });
+                document.getElementById("toMainBtn").appendChild(rtnBtn);
+
+            }
+
+            // Rain Effect
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var W = window.innerWidth;
+            var H = window.innerHeight;
+            canvas.width = W;
+            canvas.height = H;
+            var mX = 0;
+            var mY = 0;
+            var drops = [];
+            for(var i=0;i<300;i++){
+               drops.push({
+                  x: Math.random()*W,
+                  y: Math.random()*H,
+                  r: 0.25,
+                  d: Math.random()*drops.length
+               })
+            }
+            function draw(){
+               ctx.clearRect(0, 0, W, H);
+               for(var i=0;i<drops.length;i++){
+                  var drop = drops[i];
+                  ctx.beginPath();
+                  ctx.rect(drop.x, drop.y, drop.r, drop.d);
+                  ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+                  ctx.fill();
+                  ctx.closePath();
+                  drop.y += drop.d;
+                  if(drop.y > H){
+                     drop.y = -1*drop.r;
+                  }
+                  drop.x += mX;
+                  drop.x += mY;
+               }
+            }
+            setInterval(draw, 60);
+         </script>
+    </body>
+</html>
