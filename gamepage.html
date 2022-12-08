@@ -9,17 +9,18 @@
         <link rel="icon" type="image/x-icon" href="favicon_64x64.ico">
     </head>
     <body>
-        <div class="container">
-            <div id="landscape"> <!--Parent element for all the scene elements-->
-                   
-                <p id="instructions">Take your time. Press "space" to interact with the scene.</p>
+        
+        <div  class="container" id = "game">
                 
+            <div id="landscape"> <!--Parent element for all the scene elements-->
+                    
+                <p id="instructions">Take your time. Press "space" to interact with the scene.</p>
+                        
                 <p id="endGame"></p>
-
+                
                 <img src="sky.png" alt="landscape" width="100%"> <!--Landscape; only element visble on page load-->
-
                 <div id="clouds">
-                    <img src="clouds.png" alt="clouds" width="100%">
+                    <img src="clouds.png" alt="clouds" width="100%">    
                 </div>
                 <div id="water">
                     <img src="water.png" alt="water" width="100%">
@@ -32,10 +33,13 @@
                 </div>
                 <div id="house">
                     <img src="house.png" alt="house" width="35%">
-                </div>
-
+                </div>     
             </div>
+            
         </div>
+
+        <!-- Canvas for Rain Animation -->
+        <canvas id = "canvas"></canvas>
 
         <audio autoplay>
             <source src="music_with_sfx.mp3" type="audio/mp3">
@@ -57,6 +61,47 @@
     </body>
     
     <script>
+        // Rain Animation
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        var W = window.innerWidth;
+        var H = document.getElementById("landscape").offsetHeight;
+        // Initial height of the rain animation, starts at the top of the game image
+        var iH = document.getElementById("landscape").getBoundingClientRect().top; 
+        console.log("height: " + iH);
+        canvas.width = W;
+        canvas.height = H;
+        var drops = [];
+        // Starting height of the rain animation
+        var sH = H + iH;
+        for(var i = 0; i < 300; i++){
+            drops.push({
+                x: Math.random() * W,
+                y: Math.floor((Math.random() * (iH))),
+                w: 0.25,
+                h: Math.random() * drops.length
+            });
+        }
+
+        var rainAnimation = setInterval(function() {
+            ctx.clearRect(0, 0, W, H);
+            for(var i = 0; i < drops.length; i++){
+                var drop = drops[i];
+                ctx.beginPath();
+                ctx.rect(drop.x, drop.y, drop.w, drop.h);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+                if (drop.y >= iH) {
+                    ctx.fill();
+                    ctx.closePath();
+                }
+                drop.y += drop.h;
+                if(drop.y > H){
+                    drop.y = -1 * drop.w;
+                }
+            }
+        }, 60);
+
+        // Game Interactions
         var counter = 0; // counter interacts with keydown events to turn on the visibility of each element in the scene, which are all stored in an array
         var idArray = ["clouds", "water", "grass", "tree", "house"]; // array holding all of the elements in the scene 
 
@@ -66,9 +111,11 @@
 
         document.onkeydown = function(e) {
             if (e.which == 32) { // "space" keydown event
-                document.getElementById(idArray[counter]).style.display = "block"; // the next element in the array is made visible
-                counter++; // counter increments
-                if (counter == idArray.length) { // end game sequence is built into this keydown event as well; when counter equals idArray.length,
+                if (counter < idArray.length) {
+                    document.getElementById(idArray[counter]).style.display = "block"; // the next element in the array is made visible
+                    counter++; // counter increments
+                }
+                else if (counter == idArray.length) { // end game sequence is built into this keydown event as well; when counter equals idArray.length,
                     // all elements are visible to the user and the scene is completed
                     document.getElementById("endGame").innerHTML = endGameArr[Math.floor(4 * Math.random())]; // a random encouraging phrase is chosen
                     document.getElementById("endGame").style.display = "block";
@@ -88,6 +135,7 @@
             }
         }, 1000);
 
+        
 
     </script>
 </html>
