@@ -1,0 +1,55 @@
+body {
+	background: linear-gradient(-45deg, #f2ab91, #d9704A, #4f868c, #73585D);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient { 
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+#wordmark {
+	display: block;
+	margin: 0;
+	position: absolute;
+	top: 40%;
+	right: 43%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+#instructions {
+	display: block;
+	margin: 0;
+	position: absolute;
+	top: 85%;
+	right: 38%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.blink {
+	animation: blink 2s infinite;
+  }
+  
+  @keyframes blink {
+	0% {
+	  opacity: 1;
+	}
+
+	50% {
+	  opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}

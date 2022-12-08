@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>One Click Away</title>
+        <link rel="icon" type="image/x-icon" href="favicon_64x64.ico">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div id="wordmark">
+            <img src="oneClickLogoOutline2Cursor.png" alt="One Click Away Wordmark" width="150%"> <!--logo for the game-->
+        </div>
+        <div id="instructions">
+            <img class="blink" src="spaceToStart.png" alt="Press Space to Start"> <!--instructions to begin play-->
+        </div>
+    </body>
+
+    <script>
+        document.onkeydown = function(e) {
+            if (e.which == 32) { // when the space bar is pressed, the game page loads
+                location.href="gamepage.html"; 
+            } 
+        }
+    </script>
+</html>
