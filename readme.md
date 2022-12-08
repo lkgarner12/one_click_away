@@ -1,2 +1,2 @@
-# one_click_away_
- 
+# One Click Away
+Relieve your stress. It’s just one click away. Our clicker game provides an outlet to destress and relax through populating different objects into a digital art scene. The interactable scene created by clicking will function similarly to fidget toys which help relieve stress and anxiety. Further, the scenic designs allow the user to participate in creating beauty in a simple, relaxing way. In this way, we see our game functioning as a study break or short intermission from the hustle and bustle of life.
